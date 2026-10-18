@@ -3,12 +3,12 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>TypeSpeed — Learn touch typing the right way</title>
-<meta name="description" content="A structured touch-typing course that trains proper finger placement from the home row up, with real-time finger guidance. One-time purchase. Native macOS app for Apple Silicon." />
+<title>TypeSpeed — Your AI is waiting for you to finish typing</title>
+<meta name="description" content="Every prompt, every follow-up, every refinement — you type it. TypeSpeed trains proper touch typing with real-time finger guidance, so your hands keep up with your ideas. One-time purchase. Native macOS app for Apple Silicon." />
 <meta name="theme-color" content="#0B0F1C" />
 <meta property="og:type" content="website" />
-<meta property="og:title" content="TypeSpeed — Learn touch typing the right way" />
-<meta property="og:description" content="A structured course that trains proper finger placement from the home row up, with real-time finger guidance. One-time purchase. Native macOS app." />
+<meta property="og:title" content="TypeSpeed — Your AI is waiting for you to finish typing" />
+<meta property="og:description" content="Every prompt, every follow-up, every refinement — you type it. TypeSpeed trains proper touch typing so your hands keep up with your ideas. One-time purchase. Native macOS app." />
 <meta property="og:image" content="https://duch94.github.io/typespeed/assets/og-cover.jpg" />
 <meta property="og:url" content="https://duch94.github.io/typespeed/" />
 <meta name="twitter:card" content="summary_large_image" />
@@ -125,7 +125,7 @@
   @media (max-width: 640px) { .nav-links > a:not(.nav-cta) { display: none; } }
 
   /* ── Hero ───────────────────────────────────────────────────────────── */
-  header.hero { padding: 90px 0 70px; text-align: center; }
+  header.hero { padding: 48px 0 70px; text-align: center; }
   .hero-badge {
     display: inline-flex; align-items: center; gap: 8px;
     padding: 7px 14px; border-radius: 999px;
@@ -157,6 +157,64 @@
   .btn-ghost:hover { background: var(--panel-2); transform: translateY(-2px); }
   .hero-trust { color: var(--text-mute); font-size: 14px; }
   .hero-trust b { color: var(--text-dim); font-weight: 600; }
+
+  /* Rotating hero slogans */
+  .slogan-viewport { display: block; overflow: hidden; }
+  .slogan-track {
+    display: flex; align-items: flex-start;
+    transition: transform .6s cubic-bezier(.22,.61,.36,1);
+  }
+  .slogan-slide { flex: 0 0 100%; min-width: 100%; }
+  .slogan-text { display: block; }
+  .slogan-sub {
+    display: block;
+    margin: 20px auto 0; max-width: 640px;
+    font-size: clamp(16px, 1.9vw, 19px);
+    font-weight: 500; letter-spacing: 0; line-height: 1.5;
+    color: var(--text-dim);
+  }
+  .slogan-dots { display: flex; gap: 8px; justify-content: center; margin: 0; }
+  .slogan-dots button {
+    position: relative; overflow: hidden;
+    width: 8px; height: 8px; padding: 0; border: 0; border-radius: 999px;
+    background: rgba(255,255,255,0.18); cursor: pointer;
+    transition: background .2s, width .2s;
+  }
+  .slogan-dots button.active { width: 22px; background: rgba(77,217,107,0.25); }
+  .slogan-dots button.active::before {
+    content: ""; position: absolute; inset: 0; border-radius: inherit;
+    background: var(--brand);
+    transform: scaleX(0); transform-origin: left;
+    animation: dot-progress 10s linear forwards; /* keep in sync with the interval in the script */
+  }
+  .slogan-dots.paused button.active::before { animation-play-state: paused; }
+  @keyframes dot-progress { to { transform: scaleX(1); } }
+
+  /* Prev / next arrows flanking the dots */
+  .slogan-nav {
+    display: flex; align-items: center; justify-content: center; gap: 18px;
+    margin: 14px 0 36px;
+  }
+  .slogan-nav > button {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 38px; height: 38px; padding: 0;
+    border: 1px solid var(--border); border-radius: 12px;
+    background: var(--panel); color: var(--text-dim);
+    font-size: 17px; line-height: 1; cursor: pointer;
+    transition: background .15s, color .15s, transform .15s, border-color .15s;
+  }
+  .slogan-nav > button:hover { background: var(--panel-2); color: var(--text); border-color: rgba(255,255,255,0.18); transform: translateY(-1px); }
+  .slogan-nav > button:active { transform: translateY(0); }
+  @media (prefers-reduced-motion: reduce) {
+    .slogan-dots button.active { background: var(--brand); }
+    .slogan-dots button.active::before { display: none; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .slogan-track, .slogan-viewport { transition: none; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .slogan-track, .slogan-viewport { transition: none; }
+  }
 
   /* ── Hero screenshot (the app's real-time finger guidance) ────────── */
   .hero-shot {
@@ -283,8 +341,29 @@
 <header class="hero anchor" id="top">
   <div class="wrap">
     <span class="hero-badge"><span class="dot"></span> One-time purchase · No subscriptions</span>
-    <h1>Learn touch typing the <span class="hl">right way</span> — not just test your speed.</h1>
-    <p class="lead">A structured course that trains proper finger placement from the home row up, with real-time finger guidance so you build muscle memory, not shortcuts.</p>
+    <h1>
+      <span class="slogan-viewport" id="slogan-viewport">
+        <span class="slogan-track" id="slogan-track">
+          <span class="slogan-slide"><span class="slogan-text">Your AI is waiting for you to <span class="hl">finish typing.</span></span><span class="slogan-sub">Every prompt, every follow-up, every refinement — you type it. TypeSpeed trains proper touch typing with real-time finger guidance, so your hands keep up with your ideas.</span></span>
+          <span class="slogan-slide"><span class="slogan-text">Your ideas type <span class="hl">as fast as you think them.</span></span><span class="slogan-sub">The keyboard shouldn’t be the bottleneck between your brain and the screen. Structured lessons turn correct finger placement into instinct, so ideas land on the page as fast as they arrive.</span></span>
+          <span class="slogan-slide"><span class="slogan-text">Two weeks of your year, <span class="hl">hiding in your keyboard.</span></span><span class="slogan-sub">Slow typing costs an office worker 30–40 minutes a day — over 150 hours a year. TypeSpeed trains proper technique, so you stop paying that tax.</span></span>
+          <span class="slogan-slide"><span class="slogan-text">Never break <span class="hl">your flow</span> to find a key.</span><span class="slogan-sub">Every glance down at the keyboard breaks your focus. Real-time finger guidance keeps your eyes on the text and your mind in the zone.</span></span>
+          <span class="slogan-slide"><span class="slogan-text">Prompting is typing. <span class="hl">Type faster.</span></span><span class="slogan-sub">The better you type, the more you get out of every AI session. TypeSpeed trains proper technique from the home row up.</span></span>
+          <span class="slogan-slide"><span class="slogan-text">Type like you <span class="hl">own the keyboard.</span></span><span class="slogan-sub">Confidence shows — in pair programming, on calls, whenever someone glances at your screen. Proper technique makes the keyboard feel like yours.</span></span>
+          <span class="slogan-slide"><span class="slogan-text">Eight hours at the keyboard <span class="hl">shouldn’t hurt.</span></span><span class="slogan-sub">Proper finger placement means relaxed hands, neutral wrists, less strain. A technique built to last through long working days.</span></span>
+          <span class="slogan-slide"><span class="slogan-text">The most-used skill you <span class="hl">never trained.</span></span><span class="slogan-sub">Email, code, docs, chats — typing is the most-used physical skill of modern work. Train it properly, once, with structured lessons.</span></span>
+          <span class="slogan-slide"><span class="slogan-text">One purchase. One skill. <span class="hl">Every job you’ll ever have.</span></span><span class="slogan-sub">Buy once, own it forever. No subscriptions, no paywalled lessons — just a skill that pays off in every role for the rest of your career.</span></span>
+          <span class="slogan-slide"><span class="slogan-text">Refactor at <span class="hl">the speed of thought.</span></span><span class="slogan-sub">For developers: the faster your hands, the faster your iterations. Code, rename, experiment — without the keyboard slowing the loop.</span></span>
+          <span class="slogan-slide"><span class="slogan-text">Stop waiting for <span class="hl">your own hands.</span></span><span class="slogan-sub">You know what to write — your fingers just don’t keep up. Structured drills turn deliberate practice into muscle memory that does.</span></span>
+          <span class="slogan-slide"><span class="slogan-text">Stop testing your speed. <span class="hl">Change it.</span></span><span class="slogan-sub">Typing tests measure the speed you already have. TypeSpeed’s structured course actually changes it — key by key, from the home row up.</span></span>
+        </span>
+      </span>
+    </h1>
+    <div class="slogan-nav">
+      <button type="button" id="slogan-prev" aria-label="Previous slogan">←</button>
+      <div class="slogan-dots" id="slogan-dots" aria-label="Slogan selector"></div>
+      <button type="button" id="slogan-next" aria-label="Next slogan">→</button>
+    </div>
     <div class="hero-cta" id="get">
       <a class="btn btn-primary" href="https://apps.apple.com/bg/app/typespeed-tutor/id6785233852" target="_blank" rel="noopener">
         Get on the Mac App Store
@@ -301,7 +380,7 @@
         <img src="assets/app-screenshot.png" alt="TypeSpeed showing real-time finger guidance and a color-coded keyboard during a lesson" loading="eager" width="1693" height="605" />
       </picture>
     </div>
-    <p class="hero-trust" style="margin-top:22px">Real-time finger guidance and a color-coded keyboard — so you always know which finger to use without looking down.</p>
+    <p class="hero-trust">Real-time finger guidance and a color-coded keyboard — so you never look down while your next prompt takes shape.</p>
   </div>
 </header>
 
@@ -309,8 +388,8 @@
   <div class="wrap">
     <div class="section-head">
       <span class="eyebrow">Why TypeSpeed</span>
-      <h2>Built for touch typing, not typing tests.</h2>
-      <p>Most typing apps either test speed you already have, or lock real lessons behind a subscription. This one does neither.</p>
+      <h2>Built for typing, not typing tests.</h2>
+      <p>ChatGPT answers in seconds. Hunting for keys costs minutes. Most typing apps either test the speed you already have, or lock real lessons behind a subscription. This one does neither.</p>
     </div>
     <div class="grid">
       <article class="card" style="--accent:var(--brand)">
@@ -456,6 +535,94 @@
     </div>
   </div>
 </footer>
+
+<script>
+(function () {
+  var viewport = document.getElementById('slogan-viewport');
+  var track = document.getElementById('slogan-track');
+  var dotsWrap = document.getElementById('slogan-dots');
+  if (!viewport || !track) return;
+  var slides = track.children;
+  var count = slides.length;
+  var current = 0, timer = null, moving = false;
+
+  // Indicator dots
+  for (var d = 0; d < count; d++) {
+    var b = document.createElement('button');
+    b.setAttribute('aria-label', 'Show slogan ' + (d + 1) + ' of ' + count);
+    b.addEventListener('click', function (n) { return function () { go(n); stop(); start(); }; }(d));
+    dotsWrap.appendChild(b);
+  }
+  var dots = dotsWrap.children;
+
+  // Clone the first slide so the wrap-around slides left seamlessly
+  var clone = slides[0].cloneNode(true);
+  clone.setAttribute('aria-hidden', 'true');
+  track.appendChild(clone);
+
+  // Fixed height: the tallest slide, so controls below never shift under the cursor
+  function fit() {
+    var max = 0;
+    for (var i = 0; i < count; i++)
+      max = Math.max(max, slides[i].offsetHeight);
+    viewport.style.height = max + 'px';
+  }
+
+  function paint() {
+    track.style.transform = 'translateX(' + (-current * 100) + '%)';
+    var active = current % count;
+    for (var i = 0; i < dots.length; i++)
+      dots[i].classList.toggle('active', i === active);
+  }
+
+  function go(n) {
+    if (moving || n === current) return;
+    moving = true;
+    current = n;
+    paint();
+  }
+
+  track.addEventListener('transitionend', function () {
+    moving = false;
+    if (current === count) { // sitting on the cloned first slide — snap back
+      track.style.transition = 'none';
+      current = 0;
+      paint();
+      void track.offsetWidth; // force reflow before restoring transition
+      track.style.transition = '';
+    }
+  });
+
+  function next() { go(current + 1); }
+  function start() { timer = setInterval(next, 10000); dotsWrap.classList.remove('paused'); }
+  function stop() { clearInterval(timer); timer = null; dotsWrap.classList.add('paused'); }
+
+  function prev() {
+    if (moving) return;
+    if (current === 0) { // jump back seamlessly via the clone: 0 -> count (clone) -> -1
+      track.style.transition = 'none';
+      current = count;
+      paint();
+      void track.offsetWidth;
+      track.style.transition = '';
+    }
+    go(current - 1);
+  }
+
+  function restart() { stop(); start(); }
+  document.getElementById('slogan-next').addEventListener('click', function () { next(); restart(); });
+  document.getElementById('slogan-prev').addEventListener('click', function () { prev(); restart(); });
+
+  viewport.addEventListener('mouseenter', stop);
+  viewport.addEventListener('mouseleave', start);
+  window.addEventListener('resize', fit);
+  if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) start();
+  fit();
+  paint();
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(fit);
+  window.addEventListener('load', fit);
+})();
+</script>
 
 </body>
 </html>
